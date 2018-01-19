@@ -3,6 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+def commitHash = ["sh",  "-c",  "cd ${project.rootDir}; git rev-parse --short HEAD"].execute().in.text.trim()
+
 android {
     compileSdkVersion 27
     dataBinding.enabled = true
@@ -15,6 +17,9 @@ android {
         versionName "1.0"
     }
     buildTypes {
+        debug {
+            versionNameSuffix "_" + commitHash
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
